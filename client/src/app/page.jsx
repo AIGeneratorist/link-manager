@@ -1,3 +1,4 @@
+import Link from "next/link";
 import LinkAddForm from "./link-add-form.jsx";
 
 async function getLinks() {
@@ -15,7 +16,9 @@ export default async function Home() {
 			<h1>Link Manager</h1>
 			<ul>
 				{links.map(link => (
-					<li key={link.link_id}>{link.url}</li>
+					<li key={link.link_id}>
+						<Link href={`/link/${link.link_id}`}>{link.url}</Link>
+					</li>
 				))}
 			</ul>
 
