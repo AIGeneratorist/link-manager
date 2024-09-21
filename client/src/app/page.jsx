@@ -1,3 +1,5 @@
+import AddLinkForm from "./link-input";
+
 async function getLinks() {
 	const res = await fetch("http://localhost:3000/api/links", {cache: "no-store"});
 	if (!res.ok) {
@@ -16,6 +18,9 @@ export default async function Home() {
 					<li key={link.link_id}>{link.url}</li>
 				))}
 			</ul>
+
+			<h2>Add New Link</h2>
+			<AddLinkForm />
 		</>
 	);
 }
