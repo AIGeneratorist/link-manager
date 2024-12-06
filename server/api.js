@@ -1,5 +1,5 @@
-const {Router} = require("express");
-const {Links} = require("./db.js");
+import {Router} from "express";
+import {Links} from "./db.js";
 
 const apiRouter = Router();
 
@@ -28,4 +28,4 @@ apiRouter.delete("/links/:id", async (req, res) => {
 	res.status(200).send();
 });
 
-module.exports = apiRouter;
+export default apiRouter;

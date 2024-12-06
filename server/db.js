@@ -1,7 +1,7 @@
-const Sequelize = require("sequelize");
-const config = require("../config.json");
+import Sequelize from "sequelize";
+import config from "../config.json" with {type: "json"};
 
-const sequelize = new Sequelize.Sequelize({
+export const sequelize = new Sequelize.Sequelize({
 	dialect: "postgres",
 	host: config.postgresHost || "localhost",
 	port: config.postgresPort || 5432,
@@ -10,7 +10,7 @@ const sequelize = new Sequelize.Sequelize({
 	password: config.postgresPassword
 });
 
-const Links = sequelize.define("links", {
+export const Links = sequelize.define("links", {
 	link_id: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
@@ -49,8 +49,3 @@ const Links = sequelize.define("links", {
 		type: Sequelize.STRING
 	}
 });
-
-module.exports = {
-	sequelize,
-	Links
-};
