@@ -1,6 +1,6 @@
 import pg from "pg";
 import Sequelize from "sequelize";
-import config from "../../../config.json" with {type: "json"};
+import config from "../../config.json" with {type: "json"};
 
 export const sequelize = new Sequelize.Sequelize({
 	dialect: "postgres",
