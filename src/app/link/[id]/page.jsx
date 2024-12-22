@@ -1,7 +1,7 @@
 const priorities = [null, "Low", "Medium", "High"];
 
 async function getLink(id) {
-	const res = await fetch(`http://localhost:3000/api/links/${id}`, {cache: "no-store"});
+	const res = await fetch(`http://localhost:3000/api/links/${id}`);
 	if (!res.ok) {
 		throw new Error("Failed to fetch link");
 	}
@@ -9,7 +9,8 @@ async function getLink(id) {
 }
 
 export default async function LinkView({params}) {
-	const link = await getLink(params.id);
+	const {id} = await params;
+	const link = await getLink(id);
 	return (
 		<>
 			<h1>View Link</h1>

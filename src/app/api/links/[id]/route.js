@@ -2,8 +2,9 @@ import {DatabaseError} from "sequelize";
 import {Links} from "@/db/db.js";
 
 export const GET = async (req, {params}) => {
+	const {id} = await params;
 	try {
-		const link = await Links.findByPk(params.id);
+		const link = await Links.findByPk(id);
 		if (!link) {
 			return Response.json({error: "Link not found"}, {status: 404});
 		}
@@ -17,7 +18,8 @@ export const GET = async (req, {params}) => {
 };
 
 export const PATCH = async (req, {params}) => {
-	const parsedId = parseInt(params.id);
+	const {id} = await params;
+	const parsedId = parseInt(id);
 	if (isNaN(parsedId)) {
 		return Response.json({error: "Invalid ID"}, {status: 404});
 	}
@@ -45,8 +47,9 @@ export const PATCH = async (req, {params}) => {
 };
 
 export const DELETE = async (req, {params}) => {
+	const {id} = await params;
 	try {
-		const deletedCount = await Links.destroy({where: {link_id: params.id}});
+		const deletedCount = await Links.destroy({where: {link_id: id}});
 		if (deletedCount == 0) {
 			return Response.json({error: "Link not found"}, {status: 404});
 		}

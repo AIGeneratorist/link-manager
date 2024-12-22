@@ -2,7 +2,7 @@ import Link from "next/link";
 import LinkAddForm from "./link-add-form.jsx";
 
 async function getLinks() {
-	const res = await fetch("http://localhost:3000/api/links", {cache: "no-store"});
+	const res = await fetch("http://localhost:3000/api/links");
 	if (!res.ok) {
 		throw new Error("Failed to fetch links");
 	}
