@@ -62,66 +62,75 @@ export default function LinkAddForm() {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			URL:
+			<label htmlFor="input-url">URL:</label>{" "}
 			<input
 				type="text"
 				name="url"
 				value={inputData.url}
+				autoComplete="off"
+				id="input-url"
 				onChange={ev => setInputData({...inputData, url: ev.target.value})}
 			/><br />
 
-			Title:
+			<label htmlFor="input-title">Title:</label>{" "}
 			<input
 				type="text"
 				name="title"
 				value={inputData.title}
+				id="input-title"
 				onChange={ev => setInputData({...inputData, title: ev.target.value})}
 			/><br />
 
-			Folder:
+			<label htmlFor="input-folder">Folder:</label>{" "}
 			<input
 				type="text"
 				name="folder"
 				value={inputData.folder}
+				id="input-folder"
 				onChange={ev => setInputData({...inputData, folder: ev.target.value})}
 			/><br />
 
-			Category:
+			<label htmlFor="input-category">Category:</label>{" "}
 			<input
 				type="text"
 				name="category"
 				value={inputData.category}
+				id="input-category"
 				onChange={ev => setInputData({...inputData, category: ev.target.value})}
 			/><br />
 
-			Type:
+			<label htmlFor="input-type">Type:</label>{" "}
 			<input
 				type="text"
 				name="type"
 				value={inputData.type}
+				id="input-type"
 				onChange={ev => setInputData({...inputData, type: ev.target.value})}
 			/><br />
 
-			Found Date:
+			<label htmlFor="input-found-at">Found Date:</label>{" "}
 			<input
 				type="date"
 				name="found_at"
 				value={inputData.found_at}
+				id="input-found-at"
 				onChange={ev => setInputData({...inputData, found_at: ev.target.value})}
 			/><br />
 
-			Read Date:
+			<label htmlFor="input-read-at">Read Date:</label>{" "}
 			<input
 				type="date"
 				name="read_at"
 				value={inputData.read_at}
+				id="input-read-at"
 				onChange={ev => setInputData({...inputData, read_at: ev.target.value})}
 			/><br />
 
-			Priority:
+			<label htmlFor="sel-priority">Priority:</label>{" "}
 			<select
 				name="priority"
 				value={inputData.priority}
+				id="sel-priority"
 				onChange={ev => setInputData({...inputData, priority: ev.target.value})}
 			>
 				<option value={Priority.LOW}>Low</option>
@@ -129,18 +138,20 @@ export default function LinkAddForm() {
 				<option value={Priority.HIGH}>High</option>
 			</select><br />
 
-			Favorite:
+			<label htmlFor="chk-favorited">Favorite:</label>{" "}
 			<input
 				type="checkbox"
 				name="favorited"
 				checked={inputData.favorited}
+				id="chk-favorited"
 				onChange={ev => setInputData({...inputData, favorited: ev.target.checked})}
 			/><br />
 
-			Comments:
+			<label htmlFor="ta-comments">Comments:</label>{" "}
 			<textarea
 				name="comments"
 				value={inputData.comments}
+				id="ta-comments"
 				onChange={ev => setInputData({...inputData, comments: ev.target.value})}
 			/><br />
 
