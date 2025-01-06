@@ -17,13 +17,13 @@ export default async function LinkView({params}) {
 
 			<p><a href={link.url} target="_blank">{link.url}</a></p>
 
-			<p>ID: {link.link_id}</p>
+			<p>ID: {link.linkId}</p>
 			<p>Title: {link.title || <i>No title</i>}</p>
 			<p>Folder: {link.folder || <i>No folder</i>}</p>
 			<p>Category: {link.category || <i>No category</i>}</p>
 			<p>Type: {link.type || <i>No type</i>}</p>
-			<p>Found Date: {link.found_at || <i>No found date</i>}</p>
-			<p>Read Date: {link.read_at || <i>No read date</i>}</p>
+			<p>Found Date: {link.foundAt || <i>No found date</i>}</p>
+			<p>Read Date: {link.readAt || <i>No read date</i>}</p>
 			<p>Priority: {priorities[link.priority] || <i>No priority</i>}</p>
 			<p>Favorite: {link.favorited ? "Yes" : "No"}</p>
 			<p>Comments: {link.comments || <i>No comments</i>}</p>

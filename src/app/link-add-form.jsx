@@ -15,8 +15,8 @@ export default function LinkAddForm() {
 		folder: "",
 		category: "",
 		type: "",
-		found_at: "",
-		read_at: "",
+		foundAt: "",
+		readAt: "",
 		priority: Priority.MEDIUM,
 		favorited: false,
 		comments: ""
@@ -36,8 +36,8 @@ export default function LinkAddForm() {
 				folder: inputData.folder || null,
 				category: inputData.category || null,
 				type: inputData.type || null,
-				found_at: inputData.found_at || null,
-				read_at: inputData.read_at || null,
+				foundAt: inputData.foundAt || null,
+				readAt: inputData.readAt || null,
 				comments: inputData.comments || null
 			})
 		});
@@ -52,8 +52,8 @@ export default function LinkAddForm() {
 			folder: "",
 			category: "",
 			type: "",
-			found_at: "",
-			read_at: "",
+			foundAt: "",
+			readAt: "",
 			priority: Priority.MEDIUM,
 			favorited: false,
 			comments: ""
@@ -111,19 +111,19 @@ export default function LinkAddForm() {
 			<label htmlFor="input-found-at">Found Date:</label>{" "}
 			<input
 				type="date"
-				name="found_at"
-				value={inputData.found_at}
+				name="foundAt"
+				value={inputData.foundAt}
 				id="input-found-at"
-				onChange={ev => setInputData({...inputData, found_at: ev.target.value})}
+				onChange={ev => setInputData({...inputData, foundAt: ev.target.value})}
 			/><br />
 
 			<label htmlFor="input-read-at">Read Date:</label>{" "}
 			<input
 				type="date"
-				name="read_at"
-				value={inputData.read_at}
+				name="readAt"
+				value={inputData.readAt}
 				id="input-read-at"
-				onChange={ev => setInputData({...inputData, read_at: ev.target.value})}
+				onChange={ev => setInputData({...inputData, readAt: ev.target.value})}
 			/><br />
 
 			<label htmlFor="sel-priority">Priority:</label>{" "}

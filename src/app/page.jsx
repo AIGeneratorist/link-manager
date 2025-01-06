@@ -16,8 +16,8 @@ export default async function Home() {
 			<h1>Link Manager</h1>
 			<ul>
 				{links.map(link => (
-					<li key={link.link_id}>
-						<Link href={`/link/${link.link_id}`}>{link.url}</Link>
+					<li key={link.linkId}>
+						<Link href={`/link/${link.linkId}`}>{link.url}</Link>
 					</li>
 				))}
 			</ul>

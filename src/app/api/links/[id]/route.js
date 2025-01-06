@@ -32,7 +32,7 @@ export const PATCH = async (req, {params}) => {
 			return Response.json({error: "Invalid field name(s)"}, {status: 400});
 		}
 
-		const [updatedCount] = await Links.update(body, {where: {link_id: parsedId}});
+		const [updatedCount] = await Links.update(body, {where: {linkId: parsedId}});
 		if (updatedCount == 0) {
 			return Response.json({error: "Link not found"}, {status: 404});
 		}
@@ -49,7 +49,7 @@ export const PATCH = async (req, {params}) => {
 export const DELETE = async (req, {params}) => {
 	const {id} = await params;
 	try {
-		const deletedCount = await Links.destroy({where: {link_id: id}});
+		const deletedCount = await Links.destroy({where: {linkId: id}});
 		if (deletedCount == 0) {
 			return Response.json({error: "Link not found"}, {status: 404});
 		}

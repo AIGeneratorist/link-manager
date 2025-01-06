@@ -13,10 +13,11 @@ export const sequelize = new Sequelize.Sequelize({
 });
 
 export const Links = sequelize.define("links", {
-	link_id: {
+	linkId: {
 		type: Sequelize.INTEGER,
 		primaryKey: true,
-		autoIncrement: true
+		autoIncrement: true,
+		field: "link_id"
 	},
 	url: {
 		type: Sequelize.TEXT,
@@ -35,11 +36,13 @@ export const Links = sequelize.define("links", {
 	type: {
 		type: Sequelize.STRING
 	},
-	found_at: {
-		type: Sequelize.DATE
+	foundAt: {
+		type: Sequelize.DATE,
+		field: "found_at"
 	},
-	read_at: {
-		type: Sequelize.DATE
+	readAt: {
+		type: Sequelize.DATE,
+		field: "read_at"
 	},
 	priority: {
 		type: Sequelize.INTEGER
