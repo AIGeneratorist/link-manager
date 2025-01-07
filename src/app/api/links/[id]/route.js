@@ -1,4 +1,4 @@
-import {DatabaseError} from "sequelize";
+import {DatabaseError, ValidationError} from "sequelize";
 import {Links} from "@/db/db.js";
 
 export const GET = async (req, {params}) => {
@@ -31,6 +31,8 @@ export const PATCH = async (req, {params}) => {
 		if (!tempLink.changed()) {
 			return Response.json({error: "Invalid field name(s)"}, {status: 400});
 		}
+		tempLink.set("url", "https://example.com");
+		await tempLink.validate();
 
 		const [updatedCount] = await Links.update(body, {where: {linkId: parsedId}});
 		if (updatedCount == 0) {
@@ -41,6 +43,9 @@ export const PATCH = async (req, {params}) => {
 	} catch (err) {
 		if (err instanceof DatabaseError && err.message.startsWith("invalid input syntax")) {
 			return Response.json({error: `Invalid field value: ${err}`}, {status: 400});
+		}
+		if (err instanceof ValidationError) {
+			return Response.json({error: `Invalid field value(s):\n${err.message}`}, {status: 400});
 		}
 		return Response.json({error: `Server error: ${err}`}, {status: 500});
 	}

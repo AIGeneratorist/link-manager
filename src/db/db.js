@@ -22,7 +22,8 @@ export const Links = sequelize.define("links", {
 	url: {
 		type: Sequelize.TEXT,
 		allowNull: false,
-		unique: true
+		unique: true,
+		validate: {isUrl: true}
 	},
 	title: {
 		type: Sequelize.STRING
@@ -45,7 +46,8 @@ export const Links = sequelize.define("links", {
 		field: "read_at"
 	},
 	priority: {
-		type: Sequelize.INTEGER
+		type: Sequelize.INTEGER,
+		validate: {isIn: [[1, 2, 3]]}
 	},
 	favorited: {
 		type: Sequelize.BOOLEAN

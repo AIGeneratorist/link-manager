@@ -1,4 +1,4 @@
-import {DatabaseError, UniqueConstraintError} from "sequelize";
+import {DatabaseError, UniqueConstraintError, ValidationError} from "sequelize";
 import {Links} from "@/db/db.js";
 
 export const GET = async () => {
@@ -21,6 +21,9 @@ export const POST = async req => {
 		}
 		if (err instanceof DatabaseError && err.message.startsWith("invalid input syntax")) {
 			return Response.json({error: `Invalid field value: ${err}`}, {status: 400});
+		}
+		if (err instanceof ValidationError) {
+			return Response.json({error: `Invalid field value(s):\n${err.message}`}, {status: 400});
 		}
 		return Response.json({error: `Server error: ${err}`}, {status: 500});
 	}
