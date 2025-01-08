@@ -1,19 +1,21 @@
-import {DatabaseError, ValidationError} from "sequelize";
 import {Links} from "@/db/db.js";
+import {errorToResponse} from "@/utils/utils.js";
 
 export const GET = async (req, {params}) => {
 	const {id} = await params;
+	const parsedId = parseInt(id);
+	if (isNaN(parsedId)) {
+		return Response.json({error: "Invalid ID"}, {status: 404});
+	}
+
 	try {
-		const link = await Links.findByPk(id);
+		const link = await Links.findByPk(parsedId);
 		if (!link) {
 			return Response.json({error: "Link not found"}, {status: 404});
 		}
 		return Response.json(link);
 	} catch (err) {
-		if (err instanceof DatabaseError && err.message.startsWith("invalid input syntax")) {
-			return Response.json({error: "Invalid ID"}, {status: 404});
-		}
-		return Response.json({error: `Server error: ${err}`}, {status: 500});
+		return errorToResponse(err);
 	}
 };
 
@@ -41,28 +43,24 @@ export const PATCH = async (req, {params}) => {
 
 		return new Response();
 	} catch (err) {
-		if (err instanceof DatabaseError && err.message.startsWith("invalid input syntax")) {
-			return Response.json({error: `Invalid field value: ${err}`}, {status: 400});
-		}
-		if (err instanceof ValidationError) {
-			return Response.json({error: `Invalid field value(s):\n${err.message}`}, {status: 400});
-		}
-		return Response.json({error: `Server error: ${err}`}, {status: 500});
+		return errorToResponse(err);
 	}
 };
 
 export const DELETE = async (req, {params}) => {
 	const {id} = await params;
+	const parsedId = parseInt(id);
+	if (isNaN(parsedId)) {
+		return Response.json({error: "Invalid ID"}, {status: 404});
+	}
+
 	try {
-		const deletedCount = await Links.destroy({where: {linkId: id}});
+		const deletedCount = await Links.destroy({where: {linkId: parsedId}});
 		if (deletedCount == 0) {
 			return Response.json({error: "Link not found"}, {status: 404});
 		}
 		return new Response();
 	} catch (err) {
-		if (err instanceof DatabaseError && err.message.startsWith("invalid input syntax")) {
-			return Response.json({error: "Invalid ID"}, {status: 404});
-		}
-		return Response.json({error: `Server error: ${err}`}, {status: 500});
+		return errorToResponse(err);
 	}
 };
