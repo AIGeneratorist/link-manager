@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SearchBox from "@/components/search-box.jsx";
 import LinkAddForm from "./link-add-form.jsx";
 
 async function getLinks() {
@@ -14,6 +15,8 @@ export default async function Home() {
 	return (
 		<>
 			<h1>Link Manager</h1>
+			<SearchBox />
+
 			<ul>
 				{links.map(link => (
 					<li key={link.linkId}>
