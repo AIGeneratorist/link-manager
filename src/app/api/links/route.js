@@ -13,10 +13,35 @@ export const GET = async req => {
 		page = 1;
 	}
 
+	const rawSort = req.nextUrl.searchParams.get("sort");
+	let sortField;
+	let sortOrder;
+	if (rawSort) {
+		if (rawSort.endsWith("Desc")) {
+			sortField = rawSort.slice(0, -4);
+			sortOrder = "DESC";
+		} else if (rawSort.endsWith("Asc")) {
+			sortField = rawSort.slice(0, -3);
+			sortOrder = "ASC";
+		} else {
+			sortField = rawSort;
+			sortOrder = "ASC";
+		}
+
+		const attributes = Links.getAttributes();
+		if (!attributes[sortField]) {
+			return Response.json({error: "Invalid sort field"}, {status: 400});
+		}
+	} else {
+		sortField = "createdAt";
+		sortOrder = "DESC";
+	}
+
 	try {
 		const {rows, count} = await Links.findAndCountAll({
 			limit: 25,
-			offset: (page - 1) * 25
+			offset: (page - 1) * 25,
+			order: [[sortField, sortOrder]]
 		});
 		return Response.json({results: rows, count});
 	} catch (err) {
