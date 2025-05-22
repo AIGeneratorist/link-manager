@@ -1,20 +1,18 @@
 "use client";
 
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
+import {getViewURL} from "@/utils/client-utils.js";
 
 export default function Paginator({page = 1, count, prefix = "/"}) {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 
 	const totalPages = Math.ceil(count / 25);
 	const hasPreviousPage = page > 1 && totalPages > 0;
 	const hasNextPage = page < totalPages && totalPages > 0;
 
 	function handlePageChange(newPage) {
-		if (newPage == 1) {
-			router.push(prefix);
-		} else {
-			router.push(prefix == "/" ? `/page/${newPage}` : `${prefix}/page/${newPage}`);
-		}
+		router.push(getViewURL(prefix, searchParams, {page: newPage}));
 	}
 
 	return (

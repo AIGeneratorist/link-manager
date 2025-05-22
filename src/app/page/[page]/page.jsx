@@ -1,21 +1,24 @@
 import Link from "next/link";
 import Paginator from "@/components/paginator.jsx";
 import SearchBox from "@/components/search-box.jsx";
+import ViewOptions from "@/components/view-options.jsx";
 import LinkAddForm from "../../link-add-form.jsx";
 
-async function getLinks(page) {
-	const res = await fetch(`http://localhost:3000/api/links?page=${page}`);
+async function getLinks(page, {sort = "createdAtDesc"}) {
+	const res = await fetch(`http://localhost:3000/api/links?page=${page}&sort=${sort}`);
 	if (!res.ok) {
 		throw new Error("Failed to fetch links");
 	}
 	return res.json();
 }
 
-export default async function LinkPageView({params}) {
+export default async function LinkPageView({params, searchParams}) {
 	const {page} = await params;
+	const {sort} = await searchParams;
+
 	const parsedPage = parseInt(page);
 
-	const res = await getLinks(parsedPage);
+	const res = await getLinks(parsedPage, {sort});
 	const links = res.results;
 	const count = res.count;
 
@@ -32,6 +35,9 @@ export default async function LinkPageView({params}) {
 				))}
 			</ul>
 			<Paginator page={parsedPage} count={count} prefix="/" />
+
+			<h2>View Options</h2>
+			<ViewOptions sort={sort} prefix="/" />
 
 			<h2>Add New Link</h2>
 			<LinkAddForm />
