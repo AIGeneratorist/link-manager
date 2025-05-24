@@ -13,6 +13,17 @@ export const GET = async req => {
 		page = 1;
 	}
 
+	const rawLimit = req.nextUrl.searchParams.get("limit");
+	let limit;
+	if (rawLimit) {
+		limit = parseInt(rawLimit);
+		if (isNaN(limit) || limit < 1) {
+			return Response.json({error: "Invalid limit"}, {status: 400});
+		}
+	} else {
+		limit = 25;
+	}
+
 	const rawSort = req.nextUrl.searchParams.get("sort");
 	let sortField;
 	let sortOrder;
@@ -39,8 +50,8 @@ export const GET = async req => {
 
 	try {
 		const {rows, count} = await Links.findAndCountAll({
-			limit: 25,
-			offset: (page - 1) * 25,
+			limit,
+			offset: (page - 1) * limit,
 			order: [[sortField, sortOrder]]
 		});
 		return Response.json({results: rows, count});
