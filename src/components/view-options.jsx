@@ -4,8 +4,13 @@ import {useRouter, useSearchParams} from "next/navigation";
 import {useState} from "react";
 import {getViewURL} from "@/utils/client-utils.js";
 
-export default function ViewOptions({sort: rawSort = "createdAtDesc", prefix = "/"}) {
+export default function ViewOptions({
+	sort: rawSort = "createdAtDesc",
+	limit: rawLimit = 25,
+	prefix = "/"
+}) {
 	const [sort, setSort] = useState(rawSort);
+	const [limit, setLimit] = useState(rawLimit);
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
@@ -13,6 +18,13 @@ export default function ViewOptions({sort: rawSort = "createdAtDesc", prefix = "
 		setSort(newSort);
 		router.push(
 			getViewURL(prefix, searchParams, {page: 1, newSearchParams: {sort: newSort}})
+		);
+	}
+
+	function handleLimitChange(newLimit) {
+		setLimit(newLimit);
+		router.push(
+			getViewURL(prefix, searchParams, {page: 1, newSearchParams: {limit: newLimit}})
 		);
 	}
 
@@ -29,6 +41,19 @@ export default function ViewOptions({sort: rawSort = "createdAtDesc", prefix = "
 				<option value="urlDesc">URL (Z-A)</option>
 				<option value="createdAtDesc">Newest</option>
 				<option value="createdAtAsc">Oldest</option>
+			</select><br />
+
+			<label htmlFor="sel-limit">Limit:</label>{" "}
+			<select
+				name="limit"
+				value={limit}
+				id="sel-limit"
+				onChange={ev => handleLimitChange(ev.target.value)}
+			>
+				<option value="10">10</option>
+				<option value="25">25</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
 			</select>
 		</form>
 	);

@@ -4,8 +4,8 @@ import SearchBox from "@/components/search-box.jsx";
 import ViewOptions from "@/components/view-options.jsx";
 import LinkAddForm from "./link-add-form.jsx";
 
-async function getLinks({sort = "createdAtDesc"}) {
-	const res = await fetch(`http://localhost:3000/api/links?sort=${sort}`);
+async function getLinks({sort = "createdAtDesc", limit = 25}) {
+	const res = await fetch(`http://localhost:3000/api/links?sort=${sort}&limit=${limit}`);
 	if (!res.ok) {
 		throw new Error("Failed to fetch links");
 	}
@@ -13,9 +13,11 @@ async function getLinks({sort = "createdAtDesc"}) {
 }
 
 export default async function Home({searchParams}) {
-	const {sort} = await searchParams;
+	const {sort, limit} = await searchParams;
 
-	const res = await getLinks({sort});
+	const parsedLimit = limit && parseInt(limit);
+
+	const res = await getLinks({sort, limit: parsedLimit});
 	const links = res.results;
 	const count = res.count;
 
@@ -31,10 +33,10 @@ export default async function Home({searchParams}) {
 					</li>
 				))}
 			</ul>
-			<Paginator count={count} prefix="/" />
+			<Paginator count={count} limit={parsedLimit} prefix="/" />
 
 			<h2>View Options</h2>
-			<ViewOptions sort={sort} prefix="/" />
+			<ViewOptions sort={sort} limit={parsedLimit} prefix="/" />
 
 			<h2>Add New Link</h2>
 			<LinkAddForm />

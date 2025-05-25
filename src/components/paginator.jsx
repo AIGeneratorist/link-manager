@@ -3,11 +3,11 @@
 import {useRouter, useSearchParams} from "next/navigation";
 import {getViewURL} from "@/utils/client-utils.js";
 
-export default function Paginator({page = 1, count, prefix = "/"}) {
+export default function Paginator({page = 1, count, limit = 25, prefix = "/"}) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	const totalPages = Math.ceil(count / 25);
+	const totalPages = Math.ceil(count / limit);
 	const hasPreviousPage = page > 1 && totalPages > 0;
 	const hasNextPage = page < totalPages && totalPages > 0;
 
@@ -38,7 +38,7 @@ export default function Paginator({page = 1, count, prefix = "/"}) {
 			{" "}
 			{
 				totalPages > 0 && page <= totalPages ?
-				`(Showing ${(page - 1) * 25 + 1} - ${Math.min(page * 25, count)} of ${count})` :
+				`(Showing ${(page - 1) * limit + 1} - ${Math.min(page * limit, count)} of ${count})` :
 				`(${count} results)`
 			}
 		</div>
