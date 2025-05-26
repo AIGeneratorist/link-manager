@@ -1,6 +1,6 @@
 import Sequelize from "sequelize";
 import {Links} from "@/db/db.js";
-import {errorToResponse} from "@/utils/utils.js";
+import {errorToResponse, parseQueryParams} from "@/utils/utils.js";
 
 function parseSearchQuery(query, model) {
 	const attributes = model.getAttributes();
@@ -47,11 +47,17 @@ export const GET = async (req, {params}) => {
 	const {query} = await params;
 	const {filters, defaultFilterWords} = parseSearchQuery(query, Links);
 	if (Object.keys(filters).length == 0 && defaultFilterWords.length == 0) {
-		return Response.json([]);
+		return Response.json({results: [], count: 0});
+	}
+
+	const parseRes = parseQueryParams(req, Links);
+	if (parseRes.error) {
+		return Response.json(parseRes, {status: 400});
 	}
 
 	try {
-		const links = await Links.findAll({
+		const {rows, count} = await Links.findAndCountAll({
+			...parseRes.data,
 			where: {
 				...filters,
 				url: {
@@ -59,7 +65,7 @@ export const GET = async (req, {params}) => {
 				}
 			}
 		});
-		return Response.json(links);
+		return Response.json({results: rows, count});
 	} catch (err) {
 		return errorToResponse(err);
 	}
