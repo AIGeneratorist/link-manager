@@ -1,3 +1,5 @@
+import LinkDeleteContainer from "./link-delete-container.jsx";
+
 const priorities = [null, "Low", "Medium", "High"];
 
 async function getLink(id) {
@@ -27,6 +29,9 @@ export default async function LinkView({params}) {
 			<p>Priority: {priorities[link.priority] || <i>No priority</i>}</p>
 			<p>Favorite: {link.favorited ? "Yes" : "No"}</p>
 			<p>Comments: {link.comments || <i>No comments</i>}</p>
+
+			<h2>Manage Link</h2>
+			<LinkDeleteContainer linkId={link.linkId} />
 		</>
 	);
 }
